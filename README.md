@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Apigee Developer Portal Kickstart Composer Project
 
 This [Composer](https://getcomposer.org) project template is a quick way to install the [Apigee Developer Portal Kickstart installation profile](https://www.drupal.org/project/apigee_devportal_kickstart) for Drupal.
@@ -42,3 +43,6 @@ We'd love to accept your patches and contributions to this project. Make sure to
 ## Support
 
 This project, which integrates Drupal 8 with Apigee Edge, is supported by Google.
+=======
+# elie_developer_portal
+>>>>>>> 11e35f6decda9c2f25126c27483de62ba0c5c7ea
