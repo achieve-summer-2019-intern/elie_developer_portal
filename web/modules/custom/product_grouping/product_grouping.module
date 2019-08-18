@@ -23,13 +23,12 @@
 // }
 
 function product_grouping_form_alter(&$form, &$form_state, $form_id) { 
+
+    
     if ($form_id == 'developer_app_add_for_developer_form') {
         
         $firstAPIProducts = [];
         $secondAPIProducts = [];
-
-        array_push($firstAPIProducts, 'None');
-        array_push($secondAPIProducts, 'None');
 
         foreach($form['api_products']['#options'] as $key => $value) {
             $productDisplayName = substr($value, 0, 5);
@@ -42,14 +41,16 @@ function product_grouping_form_alter(&$form, &$form_state, $form_id) {
         
         }
 
-        $temp = $firstAPIProducts[1];
-        $firstAPIProducts[1] = $firstAPIProducts[2];
-        $firstAPIProducts[2] = $temp;
+        //Add the none option for product bundles
+        array_push($firstAPIProducts, 'None');
+        array_push($secondAPIProducts, 'None');
 
-        $temp = $secondAPIProducts[1];
-        $secondAPIProducts[1] = $secondAPIProducts[2];
-        $secondAPIProducts[2] = $temp;
+        /*
+        *Swap order around so tiesrs can display from least to greatest
+        */
 
+        $firstAPIProductsReversed = array_reverse($firstAPIProducts);
+        $secondAPIProductsReversed = array_reverse($secondAPIProducts);
 
         $form['group1'] = array(
             '#type' => 'fieldset',
@@ -64,14 +65,16 @@ function product_grouping_form_alter(&$form, &$form_state, $form_id) {
             '#title' => 'First Product',
             '#type' => 'radios',
             '#default_value' => 0,
-            '#options' => $firstAPIProducts
+            '#options' => $firstAPIProductsReversed,
         ];
 
         $form['group1']['product2'] = [
             '#title' => 'Second Product',
             '#type' => 'radios',
             '#default_value' => 0,
-            '#options' => $secondAPIProducts
+            '#options' => $secondAPIProductsReversed,
         ];
     }
+
+    
 }
