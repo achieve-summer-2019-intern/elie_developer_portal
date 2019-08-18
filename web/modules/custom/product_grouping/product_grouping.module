@@ -28,7 +28,8 @@ function product_grouping_form_alter(&$form, &$form_state, $form_id) {
         $firstAPIProducts = [];
         $secondAPIProducts = [];
 
-
+        array_push($firstAPIProducts, 'None');
+        array_push($secondAPIProducts, 'None');
 
         foreach($form['api_products']['#options'] as $key => $value) {
             $productDisplayName = substr($value, 0, 5);
@@ -40,6 +41,14 @@ function product_grouping_form_alter(&$form, &$form_state, $form_id) {
                 array_push($secondAPIProducts, $value);
         
         }
+
+        $temp = $firstAPIProducts[1];
+        $firstAPIProducts[1] = $firstAPIProducts[2];
+        $firstAPIProducts[2] = $temp;
+
+        $temp = $secondAPIProducts[1];
+        $secondAPIProducts[1] = $secondAPIProducts[2];
+        $secondAPIProducts[2] = $temp;
 
 
         $form['group1'] = array(
