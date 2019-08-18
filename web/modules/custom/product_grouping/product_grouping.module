@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * contains product_grouping.module
+ * targets the developer add app form and organizes the products
+ * by their tiers and restricts the user from selecting multiple 
+ * tiers for the same product.
+*/
+
+// function createProductBundleNode($name) {
+//     $node = Node::create(['type' => 'product_bundle']);
+//     $node->set('title', $name);
+//     $body = [
+//         'value:' => 'Test Page Body ',
+//         'format' => 'basic_html',
+//     ];
+//     $node->set('body', $name);
+//     $node->set('uid', 1);
+//     $node->setPublished();
+//     $node->save();
+//     drupal_set_message('Node created node id: ' . $node->id());
+// }
+
+function product_grouping_form_alter(&$form, &$form_state, $form_id) { 
+    if ($form_id == 'developer_app_add_for_developer_form') {
+        
+        $firstAPIProducts = [];
+        $secondAPIProducts = [];
+
+
+
+        foreach($form['api_products']['#options'] as $key => $value) {
+            $productDisplayName = substr($value, 0, 5);
+
+            if ($productDisplayName == 'First')
+                array_push($firstAPIProducts, $value);
+
+            if ($productDisplayName == 'Secon') 
+                array_push($secondAPIProducts, $value);
+        
+        }
+
+
+        $form['group1'] = array(
+            '#type' => 'fieldset',
+            '#title' => t('API Products'),
+            '#weight' => 10,
+            '#collapsible' => FALSE,
+            '#collapsed' => FALSE,
+            
+            );
+
+        $form['group1']['product1'] = [
+            '#title' => 'First Product',
+            '#type' => 'radios',
+            '#default_value' => 0,
+            '#options' => $firstAPIProducts
+        ];
+
+        $form['group1']['product2'] = [
+            '#title' => 'Second Product',
+            '#type' => 'radios',
+            '#default_value' => 0,
+            '#options' => $secondAPIProducts
+        ];
+    }
+}
